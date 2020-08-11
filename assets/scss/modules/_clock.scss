@@ -32,7 +32,16 @@
 
 		.elements {
 			.element {
-				
+				overflow: hidden;
+				max-height: 0px;
+
+				opacity: 0;
+
+				transition: opacity 300ms linear, max-height 300ms linear;
+				&.active {
+					max-height: 160px;
+					opacity: 1;
+				}
 			}
 		}
 

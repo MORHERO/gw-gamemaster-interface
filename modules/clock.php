@@ -7,13 +7,13 @@
 			<div class="tabnav">
 				<div class="inner flex">
 
-					<div class="nav-point active">
+					<div task="tab-switch" target="clock" class="nav-point active">
 						<div>
 							<span>Clock</span>
 						</div>
 					</div>
 					
-					<div class="nav-point">
+					<div task="tab-switch" target="stopwatch" class="nav-point">
 						<div>
 							<span>Stopwatch</span>
 						</div>
@@ -25,7 +25,7 @@
 			<div class="elements">
 
 				<!-- Clock -->
-				<div submodule="clock" class="element">
+				<div submodule="clock" class="element active">
 					
 					<div class="clock-wrap">
 
@@ -46,8 +46,8 @@
 									</div>
 
 									<div class="flex">
-										<div class="hour">20</div>:
-										<div class="minute">36</div>
+										<div class="hour">00</div>:
+										<div class="minute">00</div>
 									</div>
 
 									<div task="control-sub" class="clock-controls flex">
@@ -64,8 +64,8 @@
 								<div type="ot">
 									<p class="overline">Realtime</p>
 									<div class="flex">
-										<div class="hour">13</div>:
-										<div class="minute">28</div>
+										<div class="hour">00</div>:
+										<div class="minute">00</div>
 									</div>
 								</div>
 
