@@ -1,0 +1,74 @@
+@import "basic/variables";
+
+
+@import "basic/debug";
+
+/*-----|| fonts ||----------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+
+
+
+/*-----|| custom global definitions ||-----------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+html, body {
+	margin: 0;
+	background-color: $cl-main;
+	color: $cl-font;
+}
+
+main {
+	padding: 0px 20px;
+	> .inner {
+		max-width: $doc-width;
+		margin: 0px auto;
+		padding: 20px 0px;
+	}
+}
+
+.main-flex {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.flex {
+	display: flex;
+}
+
+.col- {
+	&1 {
+		max-width: $doc-width / 4;
+		width: $doc-width / 4;
+	}
+	&2 {
+		max-width: $doc-width / 2;
+		width: $doc-width / 2;
+	}
+	&3 {
+		max-width: ($doc-width / 4) * 3;
+		width: ($doc-width / 4) * 3;
+	}
+	&4 {
+		max-width: $doc-width;
+		width: $doc-width;
+	}
+}
+
+.module {
+	padding: 10px;
+
+}
+
+
+/*-----|| import content ||----------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+@import "templates/header";
+@import "templates/navigation";
+@import "templates/footer";
+
+@import "modules/clock";
+@import "modules/calendar";
+@import "modules/player-list";
+@import "modules/item-list";
