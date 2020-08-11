@@ -126,8 +126,8 @@ class MODULE_CLOCK {
 	}
 
 	update_clock_display(type) {
-		let hour_elem = this.element.querySelector('.clock-display [type='+ type +'] .hour');
-		let minute_elem = this.element.querySelector('.clock-display [type='+ type +'] .minute');
+		let hour_elem = this.element.querySelector('.clock-display [type='+ type +'] [name=hour]');
+		let minute_elem = this.element.querySelector('.clock-display [type='+ type +'] [name=minute]');
 
 		if(type == "ot") {
 			hour_elem.innerHTML = this.realtime.hour;

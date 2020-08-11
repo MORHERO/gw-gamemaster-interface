@@ -60,6 +60,23 @@ main {
 
 }
 
+.button {
+	background-color: $cl-main;
+	border: 1px $cl-grey solid;
+	padding: 4px 8px;
+	margin-right: 2px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: $cl-main-dark;
+	}
+
+	&.active {
+		background-color: $cl-main-black;
+		border: 1px $cl-grey solid;
+	}
+}
+
 
 /*-----|| import content ||----------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
