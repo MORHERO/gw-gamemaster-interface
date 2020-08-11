@@ -117,8 +117,14 @@
 			.flex {
 				flex-direction: column;
 			}
+			div[name=stopwatch-start] {
+				display: none;
+			}
 
 			&.paused {
+				div[name=stopwatch-start] {
+					display: block;
+				}
 				div[name=stopwatch-stop] {
 					display: none;
 				}
@@ -130,9 +136,10 @@
 			.hour-count {
 				
 				div {
+					border-bottom: 1px $cl-grey solid;
 					width: calc(100% / 10 - 4px);
 					margin: 0px 2px;
-					height: 2px;background-color: $cl-grey;
+					height: 4px;
 					.active {
 						background-color: $cl-grey;
 					}

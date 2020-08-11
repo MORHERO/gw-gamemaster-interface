@@ -93,20 +93,20 @@
 							<div class="flex clock-digits">
 								<div name="minute">00</div>:
 								<div name="second">00</div>"
-								<div name="milisecond">000</div>
+								<div name="milisecond">00</div>
 							</div>
 							<div class="flex hour-count">
-								<div name="hour" amount="1"></div>
-								<div name="hour" amount="2"></div>
-								<div name="hour" amount="3"></div>
-								<div name="hour" amount="4"></div>
-								<div name="hour" amount="5"></div>
+								<div name="hour"></div>
+								<div name="hour"></div>
+								<div name="hour"></div>
+								<div name="hour"></div>
+								<div name="hour"></div>
 
-								<div name="hour" amount="6"></div>
-								<div name="hour" amount="7"></div>
-								<div name="hour" amount="8"></div>
-								<div name="hour" amount="9"></div>
-								<div name="hour" amount="10"></div>
+								<div name="hour"></div>
+								<div name="hour"></div>
+								<div name="hour"></div>
+								<div name="hour"></div>
+								<div name="hour"></div>
 							</div>
 						</div>
 

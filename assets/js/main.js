@@ -16,9 +16,13 @@ class MODULE_CLOCK {
 		this.realtime = {hour:"00", minute: "00"};
 		this.intime = {hour:"00", minute: "00"};
 
+		this.stopwatch_interval = '';
+		this.stopwatch_time = {hour:0, minute:0, second:0, milisecond:0};
+		this.stopwatch_controls = {start:this.element.querySelector('[name=stopwatch-start]'), stop: this.element.querySelector('[name=stopwatch-stop]'), reset: this.element.querySelector('[name=stopwatch-reset]')}
+
 		this.realtime_check_interval = window.setInterval(function() {
-			that.update_realtime();
-		},1000);
+				that.update_realtime();
+			},1000);
 
 		this.setup_user_buttons(); // setup eventlisteners to user control buttons
 	}
@@ -125,9 +129,94 @@ class MODULE_CLOCK {
 		return;
 	}
 
+	control_stopwatch(type) {
+		const that = this;
+
+		let control = this.element.querySelector('.stopwatch-control');
+
+		if(type == 'start') {
+			control.classList.remove('paused');
+
+			this.stopwatch_interval = window.setInterval(function() {
+					that.update_stopwatch();
+				},10);
+		}else if (type == 'stop') {
+			control.classList.add('paused');
+
+			clearInterval(this.stopwatch_interval);
+		}else {
+			if(!control.classList.contains('paused')){
+				control.classList.add('paused');
+			}
+			clearInterval(this.stopwatch_interval);
+
+			this.stopwatch_time = {hour:0, minute:0, second:0, milisecond:0};
+			this.update_stopwatch('reset');
+		}
+	}
+
+	update_stopwatch(task="play") {
+		let time = this.stopwatch_time;
+
+		if(time.milisecond == 99) {
+			time.milisecond = 0;
+
+			if(time.second == 59) {
+				time.second = 0;
+
+				if(time.minute == 59) {
+					time.minute = 0;
+
+					if(time.hour == 10) {
+						clearInterval(this.stopwatch_interval)
+					}else {
+						time.hour++;
+					}
+				
+				}else {
+					time.minute++;
+				}
+
+			}else {
+				time.second++;
+			}
+		}else {
+			time.milisecond++;
+		}
+
+		if(task == 'reset') {
+			time.milisecond--;
+		}
+
+		let milisecond_elem = this.element.querySelector('[submodule=stopwatch] [name=milisecond]');
+		let second_elem = this.element.querySelector('[submodule=stopwatch] [name=second]');
+		let minute_elem = this.element.querySelector('[submodule=stopwatch] [name=minute]');
+		let hour_count_elem = this.element.querySelectorAll('[submodule=stopwatch] [name="hour"]');
+		let hour_count_active_elem = this.element.querySelectorAll('[submodule=stopwatch] [name="hour"].active');
+
+		milisecond_elem.innerHTML = this.leading_zero(time.milisecond);
+		second_elem.innerHTML = this.leading_zero(time.second);
+		minute_elem.innerHTML = this.leading_zero(time.minute);
+
+		if(time.hour > 0) {
+			hour_count_elem[time.hour + 1].classList.add('active');
+		}else {
+			if(hour_count_active_elem) {
+				for (var i = 0; i < hour_count_active_elem.length; ++i) {
+					hour_count_active_elem[i].classList.remove('active');
+				}
+			}
+		}
+
+		this.stopwatch_time = time;
+
+		console.log(this.stopwatch_time);
+
+	}
+
 	update_clock_display(type) {
-		let hour_elem = this.element.querySelector('.clock-display [type='+ type +'] [name=hour]');
-		let minute_elem = this.element.querySelector('.clock-display [type='+ type +'] [name=minute]');
+		let hour_elem = this.element.querySelector('[submodule=clock] .clock-display [type='+ type +'] [name=hour]');
+		let minute_elem = this.element.querySelector('[submodule=clock] .clock-display [type='+ type +'] [name=minute]');
 
 		if(type == "ot") {
 			hour_elem.innerHTML = this.realtime.hour;
@@ -164,6 +253,12 @@ class MODULE_CLOCK {
 		// get tabbar nav buttons
 		let tabnav_buttons = this.element.querySelectorAll('[task=tab-switch]');
 
+		// stopwatch control buttons
+		let button_start = this.element.querySelector('[name=stopwatch-start]');
+		let button_stop = this.element.querySelectorAll('[name=stopwatch-stop]');
+		let button_reset = this.element.querySelectorAll('[name=stopwatch-reset]');
+
+
 		// Setup add button event listeners
 		for (var i = 0; i < buttons_add.length; ++i) {
 			buttons_add[i].addEventListener('click', function(e){
@@ -183,6 +278,17 @@ class MODULE_CLOCK {
 				that.switch_tab(this);
 			});
 		}
+
+		// Setup stopwatch control buttons
+		this.stopwatch_controls.start.addEventListener('click', function(e){
+			that.control_stopwatch('start');
+		});
+		this.stopwatch_controls.stop.addEventListener('click', function(e){
+			that.control_stopwatch('stop');
+		});
+		this.stopwatch_controls.reset.addEventListener('click', function(e){
+			that.control_stopwatch('reset');
+		});
 
 		return;
 	}
