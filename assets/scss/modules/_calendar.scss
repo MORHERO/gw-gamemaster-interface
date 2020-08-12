@@ -1,0 +1,62 @@
+.module[module=calendar] {
+	> .inner {
+
+	}
+
+	.month-wrap {
+		margin-bottom: 12px;
+
+		> .flex {
+
+		}
+
+		button {
+			height: 30px;
+		}
+
+		div[name="month-title"] {
+			flex-grow: 1;
+			p {
+				text-align: center;
+				font-size: $font-m;
+				margin: 0;
+			}
+		}
+	}
+
+	.day-wrap {
+		> .flex {
+			justify-content: flex-start;
+			flex-wrap: wrap;
+		}
+
+		.day {
+			width: calc(16% - 1px);
+			border: 1px $cl-grey solid;
+			height: 23px;
+			margin: 1px 1px;
+			cursor:pointer;
+
+			span {
+				margin-left: 4px;
+				line-height: 23px;
+			}
+
+			&:hover {
+				background-color: $cl-main-dark;
+			}
+			&.selected {
+				background-color: $cl-main-dark;
+			}
+			&.marked {
+				background-color: $cl-main-black;
+			}
+		}
+
+		&.special-month {
+			.day:nth-child(n+6) {
+				display:none;
+			}
+		}
+	}
+}

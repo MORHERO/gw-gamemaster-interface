@@ -18,6 +18,7 @@
 			<div class="main-flex">
 				<?php
 					include 'modules/clock.php';
+					include 'modules/calendar.php';
 				?>
 			</div>
 		</div>

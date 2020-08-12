@@ -3,8 +3,6 @@
 */
 
 
-
-
 // module-clock
 
 class MODULE_CLOCK {
@@ -207,11 +205,7 @@ class MODULE_CLOCK {
 				}
 			}
 		}
-
 		this.stopwatch_time = time;
-
-		console.log(this.stopwatch_time);
-
 	}
 
 	update_clock_display(type) {
