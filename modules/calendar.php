@@ -7,7 +7,7 @@
 
 				<button name="month-prev"><-</button>
 				<div name="month-title">
-					<p>August</p>
+					<p>January</p>
 				</div>
 				<button name="month-next">-></button>
 
@@ -19,7 +19,7 @@
 				
 				<?php 
 					for ($i=0; $i < 30; $i++) { 
-						echo('<div class="day"><span>'.($i+1).'</span></div>');
+						echo('<div class="day" value="'.($i).'"><span>'.($i+1).'</span></div>');
 					}
 				?>
 
