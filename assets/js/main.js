@@ -419,6 +419,176 @@ class MODULE_CLOCK {
 
 }
 
+// module-dice
+class MODULE_DICE {
+	constructor (element) {
+		const that = this;
+
+		this.element = element;
+		this.preview_elem = this.element.querySelector('[task=dice-preview] .flex');
+		this.preview_overlay = this.element.querySelector('.result-overlay');
+		this.preview_result = this.element.querySelector('[name=dice-result]');
+
+		this.selected_dices = [];
+
+		this.history_elem = this.element.querySelector('[task=dice-history] .history-list');
+		this.history = [];
+
+		this.dice = {
+				'd2': {'min': 1, 'max': 2},
+				'd4': {'min': 1, 'max': 4},
+				'd6': {'min': 1, 'max': 6},
+				'd8': {'min': 1, 'max': 8},
+				'd10': {'min': 1, 'max': 10},
+				'd12': {'min': 1, 'max': 12},
+				'd20': {'min': 1, 'max': 20},
+				'd100': {'min': 0, 'max': 9}
+			}
+
+
+		this.setup_user_buttons();
+	}
+
+	add_dice(dice_type) {
+		let dice_clone = dice_type.cloneNode(true);
+
+		dice_clone.classList.remove('dice');
+		dice_clone.classList.add('dice-preview');
+
+		this.preview_elem.append(dice_clone);
+
+		return;
+	}
+
+	remove_dice(dice_type='full') {
+		if(dice_type == 'full') {
+			this.preview_elem.innerHTML = '';
+			this.toggle_overlay('close');
+		}else {
+			dice_type.remove();
+		}
+		return;
+	}
+
+	roll_dice() {
+		const that = this;
+
+		let dice_list = this.preview_elem.querySelectorAll('.dice-preview');
+		let dice_result = 0;
+		let history_text = "";
+
+		for (let i = 0; i < dice_list.length; ++i) {
+			let dice_id = dice_list[i].getAttribute('val');
+
+			let dice_result_single = that.get_dice_result(dice_id)
+
+			dice_result = dice_result + dice_result_single;
+
+			dice_list[i].querySelector('p').innerHTML = dice_result_single;
+
+			if(i + 1 < dice_list.length) {
+				history_text = history_text + dice_id + "(" + dice_result_single + ")" + " + ";
+			} else {
+				history_text = history_text + dice_id + "(" + dice_result_single + ")";
+			}
+			
+		}
+		history_text = history_text + " = " + dice_result;
+		this.preview_result.innerHTML = dice_result;
+		
+		this.add_dice_history(history_text);
+
+		this.toggle_overlay('open');
+		return;
+	}
+
+	get_dice_result(dice_id) {
+		let result = 0;
+		let d = this.dice[dice_id];
+
+		if(dice_id == "d100") {
+			result = Number(Math.floor((Math.random() * d.max) + d.min) + "0");
+		}else {
+			result = Math.floor((Math.random() * d.max) + d.min); 
+		}
+
+		return result;
+	}
+
+	toggle_overlay(type) {
+		if(type == 'open' && this.preview_overlay.classList.contains('deactivated')) {
+			this.preview_overlay.classList.remove('deactivated');
+		}
+		if(type == 'close' && !this.preview_overlay.classList.contains('deactivated')) {
+			this.preview_overlay.classList.add('deactivated');
+		}
+		
+		return;
+	}
+
+	add_dice_history(new_entry) {
+		this.history.push(new_entry);
+
+		let entry_elem = document.createElement('p');
+		entry_elem.innerHTML = new_entry;
+
+		this.history_elem.prepend(entry_elem);
+
+		if(this.history.length == 50) {
+			this.history.shift();
+			this.history_elem.removeChild(this.history_elem.lastChild);
+		} 
+
+		return;
+	}
+
+	setup_user_buttons() {
+		const that = this;
+
+		// get dice select parent
+		let dice_select_parent = this.element.querySelector('[task=dice-select]');
+
+		// get dice options&overlay buttons
+		let dice_options_roll = this.element.querySelectorAll('[name=roll]');
+		let dice_options_reset = this.element.querySelectorAll('[name=reset]');
+		let dice_overlay_close = this.element.querySelector('[name=close]');
+
+		// setup eventlisteners
+		dice_select_parent.addEventListener('click', function(e) {
+			if(e.target.classList.contains('dice')) {
+				if(e.target.classList.contains('d0')) {
+					that.remove_dice();
+				}else {
+					that.add_dice(e.target);
+				}
+			}
+		});
+
+		this.preview_elem.addEventListener('click', function(e) {
+			if(e.target.classList.contains('dice-preview')) {
+				that.remove_dice(e.target);
+			}
+		});
+
+		// set overlay eventlisteners 
+		for (let i = 0; i < dice_options_roll.length; ++i) {
+			dice_options_roll[i].addEventListener('click', function() {
+				that.roll_dice();
+			});
+		}
+		for (let i = 0; i < dice_options_reset.length; ++i) {
+			dice_options_reset[i].addEventListener('click', function() {
+				that.remove_dice('full');
+			});
+		}
+		dice_overlay_close.addEventListener('click', function() {
+			that.toggle_overlay('close');
+		});
+
+		return;
+	}
+
+}
 
 
 /*
@@ -447,3 +617,18 @@ if(module_clock_elements.length == 1) {
 		module_clock[i] = new MODULE_CLOCK(module_clock_elements[i]);
 	}
 }
+
+// module-dice
+
+const module_dice_elements = document.querySelectorAll('[module=dice');
+var module_dice = {};
+
+if(module_dice_elements.length == 1) {
+	module_dice[0] = new MODULE_DICE(module_dice_elements[0]);
+} else if (module_dice_elements.length > 1) {
+	for (let i = 0; i < module_dice_elements.length; ++i) {
+		module_dice[i] = new MODULE_DICE(module_dice_elements[i]);
+	}
+}
+
+

@@ -1,0 +1,199 @@
+.module[module=dice] {
+	> .inner {
+		
+		> .flex {
+			
+		}
+	}
+
+	.dice, .dice-preview {
+		position: relative;
+		height: 30px;
+		width: 30px;
+		font-family: $font-tech;
+		cursor: pointer;
+		.wrap {
+			position: absolute;
+			width: 100%;
+			margin: 7px 0 0 1px;
+			pointer-events: none;
+			p {
+				margin: 0;
+				text-align: center;
+				width: 100%;
+			}
+		}
+		.outline {
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			left: 0;
+			top: 0;
+			pointer-events: none;
+
+			border: 1px $cl-grey solid;
+		}
+		&.d2 {
+			.outline {
+			}
+		}
+		&.d4 {
+			
+			.outline {
+				
+			}
+		}
+		&.d6 {
+			
+			.outline {
+				
+			}
+		}
+		&.d8 {
+			
+			.outline {
+				
+			}
+		}
+		&.d10 {
+			
+			.outline {
+				
+			}
+		}
+		&.d12 {
+			
+			.outline {
+				
+			}
+		}
+		&.d20 {
+			
+			.outline {
+				
+			}
+		}
+		&.d100 {
+			font-size: $font-xs;
+			.outline {
+				
+			}
+			.wrap {
+				margin-top: 8px;
+			}
+		}
+	}
+
+	.dice-set {
+		position: relative;
+		height: 30px;
+		width: 30px;
+		font-family: $font-tech;
+		font-size: $font-xs;
+
+		&.ds100 {
+
+		}
+		&.ds10-2 {
+
+		}
+	}
+
+	[task=dice-select] {
+		> .flex {
+			justify-content: space-evenly;
+			padding: 10px 0px;
+		}
+	}
+
+	[task=dice-options] {
+		border-top: 1px $cl-grey solid;
+		border-bottom: 1px $cl-grey solid;
+
+		> .flex {
+			flex-direction:column;
+			padding: 10px;
+			padding-bottom: 0;
+		}
+
+		.button {
+			text-align: center;
+			padding: 10px 5px;
+			margin-bottom: 10px;
+			p {
+				margin: 0;
+			}
+		}
+	}
+	[task=dice-preview] {
+		border: 1px $cl-grey solid;
+		flex-grow: 1;
+		position: relative;
+		min-height: 150px;
+		> .flex {
+			justify-content: center;
+			align-content: center;
+			width: 100%;
+			max-width: 100%;
+			height: 100%;
+			flex-wrap: wrap;
+		}
+		&:hover .dice-overlay {
+			opacity: 1;
+			pointer-events:auto;
+		}
+
+		.dice-preview {
+			margin: 10px;
+		}
+
+		.result-overlay {
+			background-color: $cl-main-black-60;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+
+			opacity: 1;
+			pointer-events: auto;
+			transition: opacity 300ms linear;
+
+			&.deactivated {
+				opacity: 0;
+				pointer-events:none;
+			}
+
+			.headline {
+				text-align: center;
+			}
+			[name=dice-result] {
+				text-align: center;
+			}
+
+			> .flex {
+				justify-content: center;
+				.button {
+					margin: 10px;
+					p {margin: 0;}
+				}
+			}
+		}
+
+	}
+	[task=dice-history] {
+		border: 1px $cl-grey solid;
+		border-top: none;
+		max-height: 100px;
+		overflow: auto;
+
+		padding: 10px;
+
+		.history-list {
+			
+			p {
+				margin: 4px 0px;
+			}
+		}
+	}
+}
